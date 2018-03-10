@@ -1,4 +1,6 @@
-import {withRouter} from 'next/router'
+import {withRouter} from 'next/router';
+import {connect} from 'react-redux';
+import {selectMenuItem} from "../redux/modules/menuSelected";
 
 const ActiveLink = withRouter(({router, menu, childIds}) => {
     const changeRoute = (e, item) => {
@@ -25,19 +27,20 @@ const ActiveLink = withRouter(({router, menu, childIds}) => {
     );
 });
 
+const mapStateToProps = state => ({menu: state.menu.items});
 
-export default ({menu}) => (
-    <nav>
-        <ActiveLink menu={menu} childIds={menu._root.childIds}/> {/*id, parentId*/}
-        <style jsx>
-            {
-                `
+export default (({menu}) => (
+        <nav>
+            <ActiveLink menu={menu} childIds={menu._root.childIds}/> {/*id, parentId*/}
+            <style jsx>
+                {
+                    `
                     nav {
                         width: 30%;
                     }
                 `
-            }
-        </style>
-    </nav>
+                }
+            </style>
+        </nav>
+    )
 );
-

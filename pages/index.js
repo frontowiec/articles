@@ -1,13 +1,15 @@
 import React from 'react'
+import withRedux from "next-redux-wrapper";
 
 import Header from "../components/Header";
 import Menu from "../components/Menu";
 import Article from "../components/Article";
 import Footer from "../components/Footer";
 
+import makeStore from '../redux/store';
+import {selectMenuItem} from "../redux/modules/menuSelected";
+
 import menuData from '../data/menu';
-import store from '../redux/store';
-import withRedux from '../utils/withRedux';
 
 class Index extends React.Component {
     static getInitialProps() {
@@ -15,9 +17,13 @@ class Index extends React.Component {
         return {};
     }
 
+    constructor(props) {
+        super(props);
+    }
+
     componentWillReceiveProps(nextProps) {
-        const {pathname, query} = nextProps.url;
-        console.log(query);
+        const {query} = nextProps.url;
+        this.props.selectMenuItem(query.article);
     }
 
     render() {
@@ -48,4 +54,8 @@ class Index extends React.Component {
     }
 }
 
-export default withRedux(store)(Index);
+const mapDispatchToProps = dispatch => ({
+    selectMenuItem: id => dispatch(selectMenuItem(id))
+});
+
+export default withRedux(makeStore, null, mapDispatchToProps)(Index);

@@ -5,10 +5,13 @@ import menuItems from "./menuItems";
 import menuSelected from "./menuSelected";
 import isFetching from "./isFetching";
 
+import menuData from '../../data/menu';
+
+
 export const initialState = {
     article: null,
     menu: {
-        items: null,
+        items: menuData,
         selected: null
     },
     isFetching: false
