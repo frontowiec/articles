@@ -6,8 +6,10 @@ import Article from "../components/Article";
 import Footer from "../components/Footer";
 
 import menuData from '../data/menu';
+import store from '../redux/store';
+import withRedux from '../utils/withRedux';
 
-export default class extends React.Component {
+class Index extends React.Component {
     static getInitialProps() {
         console.log('initial props');
         return {};
@@ -45,3 +47,5 @@ export default class extends React.Component {
         )
     }
 }
+
+export default withRedux(store)(Index);
