@@ -1,46 +1,56 @@
 import {withRouter} from 'next/router';
 import {connect} from 'react-redux';
-import {selectMenuItem} from "../redux/modules/menuSelected";
+import {Fragment} from "react";
 
-const ActiveLink = withRouter(({router, menu, childIds}) => {
-    const changeRoute = (e, item) => {
+const ActiveLink = withRouter(({router, title, id}) => {
+    const changeRoute = (e) => {
         e.preventDefault();
         router.push(
-            `/?article=${item.id}`,
-            `/article/${item.title.replace(/\s/g, '-')}`,
+            `/?article=${id}`,
+            `/article/${title.replace(/\s/g, '-')}`,
             {shallow: true}
         );
     };
 
     return (
-        <ul>
-            {
-                childIds.map(id => (
-                    <li key={id}>
-                        <a style={{color: router.query.article === menu[id].id ? 'red' : 'black'}}
-                           onClick={e => changeRoute(e, menu[id])} href="#">{menu[id].title}</a>
-                        <ActiveLink menu={menu} childIds={menu[id].childIds}/>
-                    </li>
-                ))
-            }
-        </ul>
+        <a onClick={changeRoute} href="#">{title}</a>
     );
 });
 
-const mapStateToProps = state => ({menu: state.menu.items});
+const Item = (props) => {
+    return (
+        <ul>
+            <li>
+                <ActiveLink title={props.title} id={props.id}/>
+            </li>
+            {props.childIds.map(id => (
+                <Fragment key={id}>
+                    <MenuItem id={id}/>
+                </Fragment>
+            ))}
+        </ul>
+    )
+};
 
-export default (({menu}) => (
-        <nav>
-            <ActiveLink menu={menu} childIds={menu._root.childIds}/> {/*id, parentId*/}
-            <style jsx>
-                {
-                    `
+const mapStateToProps = (state, ownProps) => {
+    return state.menu.items[ownProps.id];
+};
+
+const MenuItem = connect(mapStateToProps)(Item);
+
+const Menu = () => (
+    <nav>
+        <MenuItem id={"_root"}/>
+        <style jsx>
+            {
+                `
                     nav {
                         width: 30%;
                     }
                 `
-                }
-            </style>
-        </nav>
-    )
+            }
+        </style>
+    </nav>
 );
+
+export default Menu;

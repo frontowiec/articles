@@ -9,21 +9,14 @@ import Footer from "../components/Footer";
 import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
 
-import menuData from '../data/menu';
-
 class Index extends React.Component {
     static getInitialProps() {
         console.log('initial props');
         return {};
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     componentWillReceiveProps(nextProps) {
-        const {query} = nextProps.url;
-        this.props.selectMenuItem(query.article);
+        this.props.selectMenuItem(nextProps.url.query.article || null);
     }
 
     render() {
@@ -31,7 +24,7 @@ class Index extends React.Component {
             <div className="container">
                 <Header/>
                 <div className="content">
-                    <Menu menu={menuData}/>
+                    <Menu/>
                     <Article/>
                 </div>
                 <Footer/>
