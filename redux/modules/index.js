@@ -2,10 +2,11 @@ import {combineReducers} from 'redux';
 
 import article from "./article";
 import menuItems from "./menuItems";
-import menuSelected from "./menuSelected";
+import menuSelected, {testEpic$} from "./menuSelected";
 import isFetching from "./isFetching";
 
 import menuData from '../../data/menu';
+import {combineEpics} from 'redux-observable';
 
 
 export const initialState = {
@@ -25,3 +26,7 @@ export const rootReducer = combineReducers({
     }),
     isFetching
 });
+
+export const rootEpic = combineEpics(
+    testEpic$
+);
