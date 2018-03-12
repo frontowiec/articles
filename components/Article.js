@@ -1,6 +1,9 @@
+import AjaxLoader from './AjaxLoader';
+
 export default () => (
     <div>
-        Article
+        <AjaxLoader/>
+        <h1>Article</h1>
 
         <style jsx>
             {
