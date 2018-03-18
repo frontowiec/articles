@@ -1,23 +1,18 @@
 import {connect} from 'react-redux';
 import AjaxLoader from './AjaxLoader';
+import styled from 'styled-components';
+
+const StyledArticle = styled.div`
+  width: 65%;
+  padding: 10px;
+`;
 
 const Article = ({article}) => (
-    <div>
+    <StyledArticle>
         <AjaxLoader/>
         <h1>{article.title}</h1>
         <article>{article.content}</article>
-
-        <style jsx>
-            {
-                `
-                    div {
-                        width: 65%;
-                        padding: 10px;
-                    }
-                `
-            }
-        </style>
-    </div>
+    </StyledArticle>
 );
 
 export default connect(({article}) => ({article}))(Article);

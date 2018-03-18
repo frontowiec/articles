@@ -1,15 +1,12 @@
+import styled from 'styled-components';
+
+const StyledFooter = styled.footer`
+  text-align: center;
+  border: 1px solid red;
+`;
+
 export default () => (
-    <footer>
+    <StyledFooter>
         <h4>Footer</h4>
-        <style jsx>
-            {
-                `
-                footer {
-                    text-align: center;
-                    border: 1px solid red;
-                }
-                `
-            }
-        </style>
-    </footer>
+    </StyledFooter>
 );

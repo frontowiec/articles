@@ -1,5 +1,6 @@
 import React from 'react'
 import withRedux from "next-redux-wrapper";
+import styled from 'styled-components';
 
 import Header from "../components/Header";
 import Menu from "../components/Menu";
@@ -9,6 +10,16 @@ import Footer from "../components/Footer";
 import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
 import {fetchArticle} from "../redux/modules/article";
+
+const Container = styled.div`
+  margin: 10px;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin: 10px;
+`;
 
 class Index extends React.Component {
     static getInitialProps({store, query}) {
@@ -21,28 +32,14 @@ class Index extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <Container>
                 <Header/>
-                <div className="content">
+                <Content>
                     <Menu/>
                     <Article/>
-                </div>
+                </Content>
                 <Footer/>
-
-                <style jsx>{
-                    `
-            .container {
-                margin: 10px;
-            }
-
-            .content {
-                display: flex;
-                flex-flow: row wrap;
-                margin: 10px;
-            }
-            `
-                }</style>
-            </div>
+            </Container>
         )
     }
 }

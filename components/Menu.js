@@ -1,6 +1,7 @@
 import {withRouter} from 'next/router';
 import {connect} from 'react-redux';
 import {Fragment} from "react";
+import styled from 'styled-components';
 
 const ActiveLink = withRouter(({router, title, id}) => {
     const changeRoute = (e) => {
@@ -38,19 +39,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const MenuItem = connect(mapStateToProps)(Item);
 
+const StyledNav = styled.nav`
+  width: 30%;
+`;
+
 const Menu = () => (
-    <nav>
+    <StyledNav>
         <MenuItem id={"_root"}/>
-        <style jsx>
-            {
-                `
-                    nav {
-                        width: 30%;
-                    }
-                `
-            }
-        </style>
-    </nav>
+    </StyledNav>
 );
 
 export default Menu;
