@@ -3,15 +3,16 @@ import ReactLoading from 'react-loading';
 import {connect} from 'react-redux';
 
 const Loader = ({isFetching}) => (
-    <div>
+    <div className="float-loading">
         {
-            isFetching && <div className="float-loading">
+            isFetching && <Fragment>
                 <ReactLoading type={'balls'} color={'#000'} width='100px' height='100px'/>
                 <h4>Loading article</h4>
-
-                <style jsx>
-                    {
-                        `
+            </Fragment>
+        }
+        <style jsx>
+            {
+                `
                 .float-loading {
                         display: flex;
                         flex-flow: column nowrap;
@@ -21,10 +22,8 @@ const Loader = ({isFetching}) => (
                         width: inherit;
                     }
                 `
-                    }
-                </style>
-            </div>
-        }
+            }
+        </style>
     </div>
 );
 

@@ -9,7 +9,11 @@ import menuData from '../../data/menu';
 import {combineEpics} from 'redux-observable';
 
 export const initialState = {
-    article: null,
+    article: {
+        title: null,
+        content: null,
+        createDate: null
+    },
     menu: {
         items: menuData,
         selected: null

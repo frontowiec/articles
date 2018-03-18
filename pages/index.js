@@ -8,11 +8,11 @@ import Footer from "../components/Footer";
 
 import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
+import {fetchArticle} from "../redux/modules/article";
 
 class Index extends React.Component {
-    static getInitialProps() {
-        console.log('initial props');
-        return {};
+    static getInitialProps({store, query}) {
+        store.dispatch(fetchArticle(query.id));
     }
 
     componentWillReceiveProps(nextProps) {
