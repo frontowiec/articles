@@ -1,7 +1,7 @@
 import Document, {Head, Main, NextScript} from 'next/document';
 import {ServerStyleSheet} from 'styled-components';
 
-import 'bootstrap/dist/css/bootstrap.css';
+import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class ArticlesDocument extends Document {
     static getInitialProps({renderPage}) {
@@ -16,6 +16,7 @@ export default class ArticlesDocument extends Document {
             <html>
             <Head>
                 <title>Articles</title>
+                <style dangerouslySetInnerHTML={{__html: bootstrap}}/>
                 {this.props.styleTags}
             </Head>
             <body>
