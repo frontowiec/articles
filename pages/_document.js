@@ -1,5 +1,7 @@
-import Document, {Head, Main, NextScript} from 'next/document'
-import {ServerStyleSheet} from 'styled-components'
+import Document, {Head, Main, NextScript} from 'next/document';
+import {ServerStyleSheet} from 'styled-components';
+
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default class ArticlesDocument extends Document {
     static getInitialProps({renderPage}) {

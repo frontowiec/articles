@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0",
     "express": "^4.16.2",
     "lodash": "^4.17.5",
     "next": "5.0.0",
@@ -14,6 +15,7 @@
     "react-dom": "16.2.0",
     "react-loading": "^1.0.3",
     "react-redux": "^5.0.7",
+    "reactstrap": "^5.0.0-beta.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.0",
     "redux-observable": "^0.18.0",
