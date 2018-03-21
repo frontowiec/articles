@@ -5,7 +5,6 @@ import menuItems from "./menuItems";
 import menuSelected, {selectedMenuItem$} from "./menuSelected";
 import isFetching from "./isFetching";
 
-import menuData from '../../data/menu';
 import {combineEpics} from 'redux-observable';
 
 export const initialState = {
@@ -15,7 +14,7 @@ export const initialState = {
         createDate: null
     },
     menu: {
-        items: menuData,
+        items: null,
         selected: null
     },
     isFetching: false

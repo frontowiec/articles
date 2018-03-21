@@ -1,47 +1,36 @@
 import {withRouter} from 'next/router';
 import {connect} from 'react-redux';
-import {Fragment} from "react";
+import {fetchMenu} from "../redux/modules/menuItems";
 
-const ActiveLink = withRouter(({router, title, id}) => {
-    const changeRoute = (e) => {
-        e.preventDefault();
-        router.push(
-            `/?article=${id}`,
-            `/article/${title.replace(/\s/g, '-')}`,
-            {shallow: true}
+const ActiveLink = connect(null, dispatch => ({fetchSubitems: id => dispatch(fetchMenu(id))}))(
+    withRouter(({router, title, id, hasChildren, fetchSubitems}) => {
+        const changeRoute = (e) => {
+            e.preventDefault();
+            router.push(
+                `/?article=${id}`,
+                `/article/${title.replace(/\s/g, '-')}`,
+                {shallow: true}
+            );
+
+            if (hasChildren) {
+                fetchSubitems(id);
+            }
+        };
+
+        return (
+            <a onClick={changeRoute} href="#">{title}</a>
         );
-    };
-
-    return (
-        <a onClick={changeRoute} href="#">{title}</a>
-    );
-});
-
-const Item = (props) => {
-    return (
-        <ul>
-            <li>
-                <ActiveLink title={props.title} id={props.id}/>
-            </li>
-            {props.childIds.map(id => (
-                <Fragment key={id}>
-                    <MenuItem id={id}/>
-                </Fragment>
-            ))}
-        </ul>
-    )
-};
-
-const mapStateToProps = (state, ownProps) => {
-    return state.menu.items[ownProps.id];
-};
-
-const MenuItem = connect(mapStateToProps)(Item);
-
-const Menu = () => (
-    <nav>
-        <MenuItem id={"_root"}/>
-    </nav>
+    })
 );
 
-export default Menu;
+const Menu = ({items}) => (
+    <ul>
+        {items.map(item => (
+            <li key={item.id}>
+                <ActiveLink title={item.title} id={item.id} hasChildren={item.childIds.length !== 0}/>
+            </li>
+        ))}
+    </ul>
+);
+
+export default connect(state => ({items: Object.values(state.menu.items)}))(Menu);

@@ -10,6 +10,7 @@ import Layout from "../components/Layout";
 import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
 import {loadArticle} from "../redux/modules/article";
+import {loadMenu} from "../redux/modules/menuItems";
 
 class Index extends React.Component {
     static getInitialProps({store, query}) {
@@ -17,8 +18,14 @@ class Index extends React.Component {
             .then(data => data.json())
             .then(article => {
                 store.dispatch(selectMenuItem(article.id));
-                store.dispatch(loadArticle(article))
-            });
+                store.dispatch(loadArticle(article));
+                return article.id;
+            })
+            .then(id => fetch(`http://localhost:3000/api/menu/_root/children`))
+            .then(data => data.json())
+            .then(menu => {
+                store.dispatch(loadMenu(menu));
+            })
     }
 
     componentWillReceiveProps(nextProps) {

@@ -16,6 +16,7 @@ export default class ArticlesDocument extends Document {
         return (
             <html>
             <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <title>Articles</title>
                 <style dangerouslySetInnerHTML={{__html: bootstrap}}/>
                 <style dangerouslySetInnerHTML={{__html: styles}}/>
