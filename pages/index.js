@@ -21,7 +21,7 @@ class Index extends React.Component {
                 store.dispatch(loadArticle(article));
                 return article.id;
             })
-            .then(id => fetch(`http://localhost:3000/api/menu/_root/children`))
+            .then(id => fetch(`http://localhost:3000/api/menu/${id}/children`))
             .then(data => data.json())
             .then(menu => {
                 store.dispatch(loadMenu(menu));
