@@ -13,6 +13,7 @@ const ActiveLink = connect(null, dispatch => ({fetchSubitems: id => dispatch(fet
             );
 
             if (hasChildren) {
+                console.log('fetch menu for', id);
                 fetchSubitems(id);
             }
         };
@@ -23,14 +24,20 @@ const ActiveLink = connect(null, dispatch => ({fetchSubitems: id => dispatch(fet
     })
 );
 
-const Menu = ({items}) => (
+const Item = (props) => (
+    !!props.title &&
     <ul>
-        {items.map(item => (
-            <li key={item.id}>
-                <ActiveLink title={item.title} id={item.id} hasChildren={item.childIds.length !== 0}/>
-            </li>
-        ))}
+        <li>
+            <ActiveLink id={props.id} title={props.title} hasChildren={props.childIds.length !== 0}/>
+        </li>
+        {
+            props.childIds.map(id => <ConnectedItem key={id} id={id}/>)
+        }
     </ul>
 );
 
-export default connect(state => ({items: Object.values(state.menu.items)}))(Menu);
+const ConnectedItem = connect((state, ownProps) => state.menu.items[ownProps.id] || {})(Item);
+
+const Menu = ({childIds}) => childIds.map(id => <ConnectedItem key={id} id={id}/>);
+
+export default connect(state => state.menu.items._root)(Menu);
