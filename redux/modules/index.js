@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
 import article, {fetchArticle$} from "./article";
-import menuItems from "./menuItems";
+import menuItems, {fetchSubItems$} from "./menuItems";
 import menuSelected, {selectedMenuItem$} from "./menuSelected";
 import isFetching from "./isFetching";
 
@@ -31,5 +31,6 @@ export const rootReducer = combineReducers({
 
 export const rootEpic = combineEpics(
     selectedMenuItem$,
-    fetchArticle$
+    fetchArticle$,
+    fetchSubItems$
 );

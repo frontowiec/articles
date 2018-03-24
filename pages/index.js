@@ -13,7 +13,11 @@ import {loadArticle} from "../redux/modules/article";
 import {loadMenu} from "../redux/modules/menuItems";
 
 class Index extends React.Component {
-    static getInitialProps({store, query}) {
+    static getInitialProps({store, query, isServer}) {
+        if (!isServer) {
+            return;
+        }
+
         return fetch(`http://localhost:3000/api/article/${encodeURI(query.id)}`)
             .then(data => data.json())
             .then(article => {
@@ -21,7 +25,7 @@ class Index extends React.Component {
                 store.dispatch(loadArticle(article));
                 return article.id;
             })
-            .then(id => fetch(`http://localhost:3000/api/menu/${id}/children`))
+            .then(id => fetch(`http://localhost:3000/api/menu/${id}`))
             .then(data => data.json())
             .then(menu => {
                 store.dispatch(loadMenu(menu));

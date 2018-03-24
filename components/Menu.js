@@ -1,9 +1,17 @@
 import {withRouter} from 'next/router';
 import {connect} from 'react-redux';
-import {fetchMenu} from "../redux/modules/menuItems";
+import {fetchSubItems} from "../redux/modules/menuItems";
 
-const ActiveLink = connect(null, dispatch => ({fetchSubitems: id => dispatch(fetchMenu(id))}))(
-    withRouter(({router, title, id, hasChildren, fetchSubitems}) => {
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchItems: id => {
+            dispatch(fetchSubItems(id))
+        }
+    }
+};
+
+const ActiveLink = connect(null, mapDispatchToProps)(
+    withRouter(({router, title, id, hasChildren, fetchItems}) => {
         const changeRoute = (e) => {
             e.preventDefault();
             router.push(
@@ -13,8 +21,7 @@ const ActiveLink = connect(null, dispatch => ({fetchSubitems: id => dispatch(fet
             );
 
             if (hasChildren) {
-                console.log('fetch menu for', id);
-                fetchSubitems(id);
+                fetchItems(id);
             }
         };
 

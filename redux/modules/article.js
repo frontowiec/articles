@@ -1,7 +1,7 @@
 import {createActions, handleAction} from 'redux-actions'
+import {ofType, combineEpics} from 'redux-observable';
 import {ajax} from 'rxjs/observable/dom/ajax';
 import {switchMap, map, catchError, mapTo} from 'rxjs/operators';
-import {ofType, combineEpics} from 'redux-observable';
 import {empty} from 'rxjs/observable/empty';
 import {isFetching} from "./isFetching";
 

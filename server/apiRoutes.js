@@ -192,7 +192,6 @@ const menu = {
 
 module.exports = server => {
     server.get('/api/article/:id', (req, res) => {
-
         const article = articles[req.params.id] ||
             Object.values(articles).find(a => a.title === req.params.id.replace(/-/g, ' '));
 
@@ -200,6 +199,13 @@ module.exports = server => {
     });
 
     server.get('/api/menu/:id/children', (req, res) => {
+        const id = req.params.id;
+        const children = menu[id].childIds.map(childId => menu[childId]);
+
+        res.send(keyBy(children, 'id'));
+    });
+
+    server.get('/api/menu/:id', (req, res) => {
         const id = req.params.id;
         const rootsElements = [menu._root, ...menu._root.childIds.map(rootId => menu[rootId])];
         const elementHasChildren = menu[id].childIds.length !== 0;
@@ -211,7 +217,7 @@ module.exports = server => {
 
         let parentId = menu[id].parent;
         let childrenIds = [];
-        while(parentId !== '_root') {
+        while (parentId !== '_root') {
             childrenIds = [...childrenIds, ...menu[parentId].childIds];
             parentId = menu[parentId].parent;
         }
