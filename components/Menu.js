@@ -1,50 +1,67 @@
 import {withRouter} from 'next/router';
 import {connect} from 'react-redux';
 import {fetchSubItems} from "../redux/modules/menuItems";
+import {Nav, NavItem, NavLink} from 'reactstrap';
+import styled from 'styled-components';
 
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchItems: id => {
-            dispatch(fetchSubItems(id))
-        }
-    }
-};
+const StyledNav = styled(Nav)`
+  padding-left: 10px;
+`;
 
-const ActiveLink = connect(null, mapDispatchToProps)(
-    withRouter(({router, title, id, hasChildren, fetchItems}) => {
+const StyledNavLink = styled(NavLink)
+    .attrs({
+        color: props => props.active ? 'red' : 'black'
+    })`
+  padding: 0px;
+  color: ${props => props.color};
+`;
+
+const mapDispatchToProps = dispatch => ({
+    fetchItems: id => dispatch(fetchSubItems(id))
+});
+
+const mapStateToProps = (state, ownProps) => ({isActive: state.menu.selected === ownProps.id});
+
+const ActiveLink = connect(mapStateToProps, mapDispatchToProps)(
+    withRouter(props => {
         const changeRoute = (e) => {
             e.preventDefault();
-            router.push(
-                `/?article=${id}`,
-                `/article/${title.replace(/\s/g, '-')}`,
+            props.router.push(
+                `/?article=${props.id}`,
+                `/article/${props.title.replace(/\s/g, '-')}`,
                 {shallow: true}
             );
 
-            if (hasChildren) {
-                fetchItems(id);
+            if (props.hasChildren) {
+                props.fetchItems(props.id);
             }
         };
 
         return (
-            <a onClick={changeRoute} href="#">{title}</a>
+            <StyledNavLink onClick={changeRoute} href="#"
+                           active={props.isActive}>
+                {props.title}
+            </StyledNavLink>
         );
     })
 );
 
 const Item = ({id, childIds, title}) => (
     !!title &&
-    <ul>
-        <li>
+    <StyledNav vertical>
+        <NavItem>
             <ActiveLink id={id} title={title} hasChildren={childIds.length !== 0}/>
-        </li>
+        </NavItem>
         {
             childIds.map(id => <ConnectedItem key={id} id={id}/>)
         }
-    </ul>
+    </StyledNav>
 );
 
 const ConnectedItem = connect((state, ownProps) => state.menu.items[ownProps.id] || {})(Item);
 
-const Menu = ({childIds}) => childIds.map(id => <ConnectedItem key={id} id={id}/>);
+const Menu = ({childIds}) => childIds.map(id => (
+    <ConnectedItem key={id} id={id}/>
+));
 
 export default connect(state => state.menu.items._root)(Menu);
