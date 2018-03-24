@@ -202,8 +202,9 @@ module.exports = server => {
     server.get('/api/menu/:id/children', (req, res) => {
         const id = req.params.id;
         const rootsElements = [menu._root, ...menu._root.childIds.map(rootId => menu[rootId])];
+        const elementHasChildren = menu[id].childIds.length !== 0;
 
-        if (rootsElements.some(element => element.id === id)) {
+        if (rootsElements.some(element => element.id === id) && !elementHasChildren) {
             res.send(keyBy(rootsElements, 'id'));
             return;
         }
@@ -213,6 +214,10 @@ module.exports = server => {
         while(parentId !== '_root') {
             childrenIds = [...childrenIds, ...menu[parentId].childIds];
             parentId = menu[parentId].parent;
+        }
+
+        if (elementHasChildren) {
+            childrenIds = [...childrenIds, ...menu[id].childIds];
         }
 
         const children = childrenIds.map(childId => menu[childId]);
