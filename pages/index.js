@@ -12,6 +12,11 @@ import {selectMenuItem} from "../redux/modules/menuSelected";
 import {loadArticle} from "../redux/modules/article";
 import {loadMenu} from "../redux/modules/menuItems";
 
+if (process.env.NODE_ENV !== 'production') {
+    const {whyDidYouUpdate} = require('why-did-you-update');
+    whyDidYouUpdate(React)
+}
+
 class Index extends React.Component {
     static getInitialProps({store, query, isServer}) {
         if (!isServer) {

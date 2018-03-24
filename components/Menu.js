@@ -31,14 +31,14 @@ const ActiveLink = connect(null, mapDispatchToProps)(
     })
 );
 
-const Item = (props) => (
-    !!props.title &&
+const Item = ({id, childIds, title}) => (
+    !!title &&
     <ul>
         <li>
-            <ActiveLink id={props.id} title={props.title} hasChildren={props.childIds.length !== 0}/>
+            <ActiveLink id={id} title={title} hasChildren={childIds.length !== 0}/>
         </li>
         {
-            props.childIds.map(id => <ConnectedItem key={id} id={id}/>)
+            childIds.map(id => <ConnectedItem key={id} id={id}/>)
         }
     </ul>
 );
