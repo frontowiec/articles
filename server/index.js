@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -6,17 +7,21 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 
 const apiRouters = require('./apiRoutes');
+const uuidv4 = require('uuid/v4');
+const usersMiddleware = require('./user.middleware');
 
 app.prepare()
     .then(() => {
         const server = express();
 
+        server.use(cookieParser());
+
         // REST API
         apiRouters(server);
 
-        server.get('/article/:id', (req, res) => {
+        server.get('/article/:id', usersMiddleware, (req, res) => {
             const actualPage = '/';
-            const queryParams = {id: req.params.id};
+            const queryParams = {id: req.params.id, user: req.user};
             app.render(req, res, actualPage, queryParams);
         });
 

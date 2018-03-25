@@ -10,17 +10,22 @@ const StyledNav = styled(Nav)`
 
 const StyledNavLink = styled(NavLink)
     .attrs({
-        color: props => props.active ? 'red' : 'black'
+        color: props => props.active ? 'red' : 'black',
+        weight: props => props.visited ? '300' : '600'
     })`
   padding: 0px;
   color: ${props => props.color};
+  font-weight: ${props => props.weight};
 `;
 
 const mapDispatchToProps = dispatch => ({
     fetchItems: id => dispatch(fetchSubItems(id))
 });
 
-const mapStateToProps = (state, ownProps) => ({isActive: state.menu.selected === ownProps.id});
+const mapStateToProps = (state, ownProps) => ({
+    isActive: state.menu.selected === ownProps.id,
+    visited: state.menu.items[ownProps.id].visited
+});
 
 const ActiveLink = connect(mapStateToProps, mapDispatchToProps)(
     withRouter(props => {
@@ -39,7 +44,8 @@ const ActiveLink = connect(mapStateToProps, mapDispatchToProps)(
 
         return (
             <StyledNavLink onClick={changeRoute} href="#"
-                           active={props.isActive}>
+                           active={props.isActive}
+                           visited={props.visited}>
                 {props.title}
             </StyledNavLink>
         );

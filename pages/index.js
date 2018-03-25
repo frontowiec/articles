@@ -23,14 +23,14 @@ class Index extends React.Component {
             return;
         }
 
-        return fetch(`http://localhost:3000/api/article/${encodeURI(query.id)}`)
+        return fetch(`http://localhost:3000/api/article/${encodeURI(query.id)}?user=${query.user.id}`)
             .then(data => data.json())
             .then(article => {
                 store.dispatch(selectMenuItem(article.id));
                 store.dispatch(loadArticle(article));
                 return article.id;
             })
-            .then(id => fetch(`http://localhost:3000/api/menu/${id}`))
+            .then(id => fetch(`http://localhost:3000/api/menu/${id}?user=${query.user.id}`))
             .then(data => data.json())
             .then(menu => {
                 store.dispatch(loadMenu(menu));
