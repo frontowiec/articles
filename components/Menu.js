@@ -10,13 +10,38 @@ const StyledNav = styled(Nav)`
 
 const StyledNavLink = styled(NavLink)
     .attrs({
-        color: props => props.active ? 'red' : 'black',
-        weight: props => props.visited ? '300' : '600'
+        color: ({active}) => active ? 'red' : 'black',
+        weight: ({visited}) => visited === 'true' ? '300' : '600'
     })`
   padding: 0px;
-  color: ${props => props.color};
-  font-weight: ${props => props.weight};
+  color: ${({color}) => color};
+  font-weight: ${({weight}) => weight};
 `;
+
+const Link = ({router, id, title, hasChildren, fetchItems, isActive, isVisited = false}) => {
+    const changeRoute = e => {
+        e.preventDefault();
+        router.push(
+            `/?article=${id}`,
+            `/article/${title.replace(/\s/g, '-')}`,
+            {shallow: true}
+        );
+
+        if (hasChildren) {
+            fetchItems(id);
+        }
+    };
+
+    return (
+        <StyledNavLink onClick={changeRoute} href="#"
+                       active={isActive}
+                       visited={isVisited.toString()}>
+            {title}
+        </StyledNavLink>
+    );
+};
+
+const RouterLink = withRouter(Link);
 
 const mapDispatchToProps = dispatch => ({
     fetchItems: id => dispatch(fetchSubItems(id))
@@ -24,39 +49,16 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state, ownProps) => ({
     isActive: state.menu.selected === ownProps.id,
-    visited: state.menu.items[ownProps.id].visited
+    isVisited: state.menu.items[ownProps.id].visited
 });
 
-const ActiveLink = connect(mapStateToProps, mapDispatchToProps)(
-    withRouter(props => {
-        const changeRoute = (e) => {
-            e.preventDefault();
-            props.router.push(
-                `/?article=${props.id}`,
-                `/article/${props.title.replace(/\s/g, '-')}`,
-                {shallow: true}
-            );
-
-            if (props.hasChildren) {
-                props.fetchItems(props.id);
-            }
-        };
-
-        return (
-            <StyledNavLink onClick={changeRoute} href="#"
-                           active={props.isActive}
-                           visited={props.visited}>
-                {props.title}
-            </StyledNavLink>
-        );
-    })
-);
+const ConnectedRouterLink = connect(mapStateToProps, mapDispatchToProps)(RouterLink);
 
 const Item = ({id, childIds, title}) => (
     !!title &&
     <StyledNav vertical>
         <NavItem>
-            <ActiveLink id={id} title={title} hasChildren={childIds.length !== 0}/>
+            <ConnectedRouterLink id={id} title={title} hasChildren={childIds.length !== 0}/>
         </NavItem>
         {
             childIds.map(id => <ConnectedItem key={id} id={id}/>)
