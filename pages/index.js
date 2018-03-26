@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import withRedux from "next-redux-wrapper";
 import {Col} from "reactstrap";
 import fetch from 'node-fetch';
@@ -11,6 +11,7 @@ import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
 import {loadArticle} from "../redux/modules/article";
 import {loadMenu} from "../redux/modules/menuItems";
+import MenuBurger from "../components/MenuBurger";
 
 if (process.env.NODE_ENV !== 'production') {
     const {whyDidYouUpdate} = require('why-did-you-update');
@@ -43,14 +44,17 @@ class Index extends React.Component {
 
     render() {
         return (
-            <Layout>
-                <Col sm={5}>
-                    <Menu/>
-                </Col>
-                <Col sm={7}>
-                    <Article/>
-                </Col>
-            </Layout>
+            <Fragment>
+                <MenuBurger/>
+                <Layout>
+                    <Col lg={5} className="d-none d-lg-block">
+                        <Menu/>
+                    </Col>
+                    <Col lg={7} md={12}>
+                        <Article/>
+                    </Col>
+                </Layout>
+            </Fragment>
         )
     }
 }

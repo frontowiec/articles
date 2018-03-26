@@ -3,7 +3,6 @@ import AjaxLoader from './AjaxLoader';
 import styled from 'styled-components';
 
 const StyledArticle = styled.div`
-  width: 65%;
   padding: 10px;
 `;
 
