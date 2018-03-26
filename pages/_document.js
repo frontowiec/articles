@@ -19,6 +19,8 @@ export default class ArticlesDocument extends Document {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <title>Articles</title>
 
+                <link href="https://fonts.googleapis.com/css?family=Lato:400,400i|Noto+Sans|Open+Sans" rel="stylesheet" />
+
                 <style dangerouslySetInnerHTML={{__html: bootstrap}}/>
                 <style dangerouslySetInnerHTML={{__html: styles}}/>
                 {this.props.styleTags}

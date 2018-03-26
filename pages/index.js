@@ -45,15 +45,15 @@ class Index extends React.Component {
     render() {
         return (
             <Fragment>
-                <MenuBurger/>
-                <Layout>
-                    <Col lg={5} className="d-none d-lg-block">
-                        <Menu/>
-                    </Col>
-                    <Col lg={7} md={12}>
-                        <Article/>
-                    </Col>
-                </Layout>
+                    <MenuBurger/>
+                    <Layout>
+                        <Col lg={5} className="d-none d-lg-block">
+                            <Menu/>
+                        </Col>
+                        <Col lg={7} md={12}>
+                            <Article/>
+                        </Col>
+                    </Layout>
             </Fragment>
         )
     }
