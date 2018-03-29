@@ -20,4 +20,4 @@ yarn-error.log*
 
 .idea
 
-./server/config/dev.js
+/server/config/dev.js
