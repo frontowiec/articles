@@ -9,6 +9,7 @@ const handle = app.getRequestHandler();
 const apiRouters = require('./apiRoutes');
 const uuidv4 = require('uuid/v4');
 const usersMiddleware = require('./user.middleware');
+const testNewApi = require('./testNewApi');
 
 app.prepare()
     .then(() => {
@@ -18,6 +19,9 @@ app.prepare()
 
         // REST API
         apiRouters(server);
+
+        // TEST
+        testNewApi(server);
 
         server.get('/article/:id', usersMiddleware, (req, res) => {
             const actualPage = '/';

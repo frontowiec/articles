@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 import withRedux from "next-redux-wrapper";
-import {Col} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import fetch from 'node-fetch';
 
 import Menu from "../components/Menu";
@@ -44,17 +44,18 @@ class Index extends React.Component {
 
     render() {
         return (
-            <Fragment>
-                    <MenuBurger/>
-                    <Layout>
+            <Layout>
+                <Container>
+                    <Row>
                         <Col lg={5} className="d-none d-lg-block">
                             <Menu/>
                         </Col>
                         <Col lg={7} md={12}>
                             <Article/>
                         </Col>
-                    </Layout>
-            </Fragment>
+                    </Row>
+                </Container>
+            </Layout>
         )
     }
 }

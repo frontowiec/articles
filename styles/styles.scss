@@ -1,15 +1,10 @@
 @import "sticky-footer";
+@import "../static/assets/sass/now-ui-kit";
 
 @media (min-width: 1200px) {
   .container {
     max-width: 1600px;
   }
-}
-
-#__next {
-  //font-family: 'Lato', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  //font-family: 'Noto Sans', sans-serif;
 }
 
 /* Position and sizing of burger button */
