@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import withRedux from "next-redux-wrapper";
 import {Col, Container, Row} from "reactstrap";
 import fetch from 'node-fetch';
@@ -11,7 +11,6 @@ import makeStore from '../redux/store';
 import {selectMenuItem} from "../redux/modules/menuSelected";
 import {loadArticle} from "../redux/modules/article";
 import {loadMenu} from "../redux/modules/menuItems";
-import MenuBurger from "../components/MenuBurger";
 
 if (process.env.NODE_ENV !== 'production') {
     const {whyDidYouUpdate} = require('why-did-you-update');
